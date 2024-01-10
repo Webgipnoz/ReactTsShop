@@ -1,7 +1,7 @@
 [
   {
     "id": 1,
-    "name": "Book",
+    "name": "screwdriver",
     "price": 10.99,
     "imgUrl": "/imgs/item1.jpg"
   },
@@ -13,13 +13,13 @@
   },
   {
     "id": 3,
-    "name": "Banana",
+    "name": "Car",
     "price": 1.05,
     "imgUrl": "/imgs/item3.jpg"
   },
   {
     "id": 4,
-    "name": "Car",
+    "name": "Apple",
     "price": 14000,
     "imgUrl": "/imgs/item4.jpg"
   }
