@@ -2,7 +2,7 @@ import React from "react";
 import { Button, Card } from "react-bootstrap";
 
 import { formatCurrency } from "../utilities/formatCurrency";
-import { useShoppingCard } from "../context/ShoppingCardContext";
+import { useShoppingCart } from "../context/ShoppingCardContext";
 
 type StoreItmeProps = {
   id: number;
@@ -17,7 +17,7 @@ const StoreItem = ({ id, name, price, imgUrl }: StoreItmeProps) => {
     decreaseCartQuantity,
     removeFromCart,
     getItemQuantity,
-  } = useShoppingCard();
+  } = useShoppingCart();
   const quantity: number = getItemQuantity(id);
 
   return (

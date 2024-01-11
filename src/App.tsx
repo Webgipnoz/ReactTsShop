@@ -5,7 +5,7 @@ import { Container } from "react-bootstrap";
 import Home from "./pages/Home";
 import Store from "./pages/Store";
 import About from "./pages/About";
-import Navbar from "./components/Navbat";
+import Navbar from "./components/Navbar";
 import ShoppingCardProvider from "./context/ShoppingCardContext";
 
 function App() {

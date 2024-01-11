@@ -6,10 +6,14 @@ type ShoppingCardProviderProps = {
 };
 
 type ShoppingCardContext = {
+  openCart: () => void;
+  closeCart: () => void;
   getItemQuantity: (id: number) => number;
   increaseCartQuantity: (id: number) => void;
   decreaseCartQuantity: (id: number) => void;
   removeFromCart: (id: number) => void;
+  cartQuantity: number;
+  cartItems: CartItem[];
 };
 
 type CartItem = {
@@ -19,21 +23,29 @@ type CartItem = {
 
 const ShoppingCardContext = createContext({} as ShoppingCardContext);
 
-export function useShoppingCard() {
+export function useShoppingCart() {
   return useContext(ShoppingCardContext);
 }
 
 export default function ShoppingCardProvider({
   children,
 }: ShoppingCardProviderProps) {
-  const [cartItems, setCatItems] = useState<CartItem[]>([]);
+  const [isOpen, setIsOpen] = useState(false);
+  const [cartItems, setCartItems] = useState<CartItem[]>([]);
+
+  const cartQuantity = cartItems.reduce(
+    (quantity, item) => quantity + item.quantity,
+    0
+  );
+
+  const openCart = () => setIsOpen(true);
+  const closeCart = () => setIsOpen(false);
 
   function getItemQuantity(id: number) {
     return cartItems.find((item) => item.id === id)?.quantity || 0;
   }
-
   function increaseCartQuantity(id: number) {
-    setCatItems((currItems) => {
+    setCartItems((currItems) => {
       if (currItems.find((item) => item.id === id) == null) {
         return [...currItems, { id, quantity: 1 }];
         // ищем currItem в корзине, если его нет, тобишь null то мы возвращаем масив айтемов но уже с новым curritem у когорого quantity 1
@@ -50,9 +62,8 @@ export default function ShoppingCardProvider({
       }
     });
   }
-
   function decreaseCartQuantity(id: number) {
-    setCatItems((currItems) => {
+    setCartItems((currItems) => {
       if (currItems.find((item) => item.id === id)?.quantity === 1) {
         return currItems.filter((item) => item.id !== id);
         // если у предмета quantity 1 то мы его кикам из массива всех айтемов карзины
@@ -69,10 +80,9 @@ export default function ShoppingCardProvider({
       }
     });
   }
-
   function removeFromCart(id: number) {
     // удаляем айтем
-    setCatItems((currItem) => {
+    setCartItems((currItem) => {
       return currItem.filter((item) => item.id !== id);
     });
   }
@@ -84,6 +94,10 @@ export default function ShoppingCardProvider({
         increaseCartQuantity,
         decreaseCartQuantity,
         removeFromCart,
+        openCart,
+        closeCart,
+        cartItems,
+        cartQuantity,
       }}
     >
       {children}
