@@ -6,15 +6,15 @@ import CartItem from "./CartItem";
 import { formatCurrency } from "../utilities/formatCurrency";
 import storeItem from "../data/items.json";
 
-type ShoppingCardProps = {
-  isOpen: boolean;
-};
+// type ShoppingCardProps = {
+//   isOpen: boolean;
+// };
 
-const ShoppingCard = ({ isOpen }: ShoppingCardProps) => {
-  const { closeCart, cartItems } = useShoppingCart();
+const ShoppingCard = () => {
+  const { cartItems } = useShoppingCart();
 
   return (
-    <Offcanvas show={isOpen} onHide={closeCart} placement="end">
+    <Offcanvas placement="end">
       <Offcanvas.Header closeButton>
         <Offcanvas.Title>Cart</Offcanvas.Title>
       </Offcanvas.Header>
