@@ -20,7 +20,7 @@ const Navbar = () => {
             About
           </Nav.Link>
         </Nav>
-        {1 > 0 && (
+        {cartQuantity > 0 && (
           <Button
             style={{ width: "3rem", height: "3rem", position: "relative" }}
             variant="outline-primary"

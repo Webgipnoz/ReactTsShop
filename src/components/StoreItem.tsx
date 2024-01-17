@@ -21,12 +21,14 @@ const StoreItem = ({ id, name, price, imgUrl }: StoreItemProps) => {
   }
 
   function decrementItem() {
-    setQuantity(quantity - 1);
+    if (quantity > 0) {
+      setQuantity(quantity - 1);
+    }
   }
 
   function buttonIsPressed() {
+    setSubmitPressed(!submitPressed);
     setItemQuantity({ id, quantity });
-    setSubmitPressed(true);
   }
 
   return (
@@ -65,7 +67,7 @@ const StoreItem = ({ id, name, price, imgUrl }: StoreItemProps) => {
               <Button
                 variant="success"
                 size="sm"
-                onClick={() => setItemQuantity({ id, quantity })}
+                onClick={() => buttonIsPressed()}
               >
                 Submit
               </Button>
