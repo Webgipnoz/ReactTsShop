@@ -1,20 +1,26 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
-import { Offcanvas, Stack } from "react-bootstrap";
+import { Button, Offcanvas, Stack } from "react-bootstrap";
 import { useShoppingCart } from "../context/ShoppingCardContext";
 import CartItem from "./CartItem";
 import { formatCurrency } from "../utilities/formatCurrency";
 import storeItem from "../data/items.json";
 
-// type ShoppingCardProps = {
-//   isOpen: boolean;
-// };
+type ShoppingCardProps = {
+  isOpen: boolean;
+};
 
-const ShoppingCard = () => {
-  const { cartItems } = useShoppingCart();
+const ShoppingCard = ({ isOpen }: ShoppingCardProps) => {
+  const { showCart, cartItems } = useShoppingCart();
 
   return (
-    <Offcanvas placement="end">
+    <Offcanvas
+      style={{ width: "40%" }}
+      show={isOpen}
+      onHide={showCart}
+      placement="end"
+    >
       <Offcanvas.Header closeButton>
         <Offcanvas.Title>Cart</Offcanvas.Title>
       </Offcanvas.Header>
@@ -33,6 +39,17 @@ const ShoppingCard = () => {
             )}
           </div>
         </Stack>
+        <Link to={"/order"}>
+          <Button
+            onClick={() => {
+              showCart();
+            }}
+            variant="success"
+            size="lg"
+          >
+            Submit
+          </Button>
+        </Link>
       </Offcanvas.Body>
     </Offcanvas>
   );

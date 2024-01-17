@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom";
 import { useShoppingCart } from "../context/ShoppingCardContext";
 
 const Navbar = () => {
-  const { cartQuantity } = useShoppingCart();
+  const { cartQuantity, showCart } = useShoppingCart();
 
   return (
     <NavbarBs sticky="top" className="bg-white shadow-sm sm-3">
@@ -22,6 +22,7 @@ const Navbar = () => {
         </Nav>
         {cartQuantity > 0 && (
           <Button
+            onClick={() => showCart()}
             style={{ width: "3rem", height: "3rem", position: "relative" }}
             variant="outline-primary"
           >

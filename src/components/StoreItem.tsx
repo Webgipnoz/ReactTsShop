@@ -28,7 +28,10 @@ const StoreItem = ({ id, name, price, imgUrl }: StoreItemProps) => {
 
   function buttonIsPressed() {
     setSubmitPressed(!submitPressed);
-    setItemQuantity({ id, quantity });
+    if (quantity !== 0) {
+      setItemQuantity({ id, quantity });
+      setQuantity(0);
+    }
   }
 
   return (
