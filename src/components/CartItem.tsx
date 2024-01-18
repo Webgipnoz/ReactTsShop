@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useShoppingCart } from "../context/ShoppingCardContext";
 
 import storeItems from "../data/items.json";
@@ -11,7 +11,7 @@ type CartItmesProps = {
 };
 
 const CartItem = ({ id, quantity }: CartItmesProps) => {
-  const { removeFromCart } = useShoppingCart();
+  const { removeFromCart, incrementItem, decrementItem } = useShoppingCart();
   const item = storeItems.find((i) => i.id === id);
   if (item == null) return null;
 
@@ -30,7 +30,7 @@ const CartItem = ({ id, quantity }: CartItmesProps) => {
       <div> {formatCurrency(item.price * quantity)}</div>
       <Button
         onClick={() => {
-          quantity -= 1;
+          decrementItem(id, quantity);
         }}
       >
         -
@@ -40,7 +40,7 @@ const CartItem = ({ id, quantity }: CartItmesProps) => {
       </span>
       <Button
         onClick={() => {
-          quantity += 1;
+          incrementItem(id, quantity);
         }}
       >
         +

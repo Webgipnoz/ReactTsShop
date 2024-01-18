@@ -8,8 +8,10 @@ type ShoppingCardProviderProps = {
 };
 
 type ShoppingCardContext = {
-  setItemQuantity: (data: { id: number; quantity: number }) => void;
+  setItemQuantityForCart: (data: { id: number; quantity: number }) => void;
   removeFromCart: (id: number) => void;
+  incrementItem: (id: number, quantity: number) => void;
+  decrementItem: (id: number, quantity: number) => void;
   cartQuantity: number;
   cartItems: Item[];
   showCart: () => void;
@@ -31,6 +33,7 @@ export default function ShoppingCardProvider({
 }: ShoppingCardProviderProps) {
   const [cartItems, setCartItems] = useState<Item[]>([]); // список всех айтемов в корзине
   const [isOpen, setIsOpen] = useState(false); // показывать корзину или нет
+  const [itemQuantity, setItemQuantity] = useState(0);
 
   const cartQuantity = cartItems.reduce(
     //общее quantity вссех предметов в карзине
@@ -43,8 +46,9 @@ export default function ShoppingCardProvider({
     setIsOpen(!isOpen);
   }
 
-  function setItemQuantity(data: { id: number; quantity: number }) {
+  function setItemQuantityForCart(data: { id: number; quantity: number }) {
     // запись количества предмета в корзину
+    // сколько было обьясвленно в count store page столько и добавится
     const { id, quantity } = data;
     setCartItems((items) => {
       const updatedItems = [...items];
@@ -63,8 +67,20 @@ export default function ShoppingCardProvider({
     });
   }
 
+  function incrementItem(id: number, quantity: number) {
+    if (cartItems.find((item) => item.id === id)) {
+    }
+  }
+
+  function decrementItem(id: number, quantity: number) {
+    if (quantity > 0) {
+      console.log(quantity - 1);
+      return quantity - 1;
+    }
+  }
+
   function removeFromCart(id: number) {
-    // удаляем айтем и его quantity
+    // удаляем айтем и его quantity из корзины
     setCartItems((currItem) => {
       return currItem.filter((item) => item.id !== id);
     });
@@ -73,8 +89,10 @@ export default function ShoppingCardProvider({
   return (
     <ShoppingCardContext.Provider
       value={{
-        setItemQuantity,
+        setItemQuantityForCart,
         removeFromCart,
+        incrementItem,
+        decrementItem,
         cartItems,
         cartQuantity,
         showCart,

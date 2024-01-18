@@ -12,7 +12,7 @@ type StoreItemProps = {
 };
 
 const StoreItem = ({ id, name, price, imgUrl }: StoreItemProps) => {
-  const { setItemQuantity } = useShoppingCart();
+  const { setItemQuantityForCart } = useShoppingCart();
   const [quantity, setQuantity] = useState(0);
   const [submitPressed, setSubmitPressed] = useState(false);
 
@@ -29,7 +29,7 @@ const StoreItem = ({ id, name, price, imgUrl }: StoreItemProps) => {
   function buttonIsPressed() {
     setSubmitPressed(!submitPressed);
     if (quantity !== 0) {
-      setItemQuantity({ id, quantity });
+      setItemQuantityForCart({ id, quantity });
       setQuantity(0);
     }
   }

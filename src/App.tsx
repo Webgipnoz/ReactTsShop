@@ -1,6 +1,7 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 import { Container } from "react-bootstrap";
+import { Provider } from "react-redux";
 
 import Home from "./pages/Home";
 import Store from "./pages/Store";
