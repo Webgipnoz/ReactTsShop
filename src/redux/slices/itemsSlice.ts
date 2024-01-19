@@ -10,11 +10,13 @@ interface Item {
 interface CartState {
   cartItems: Item[];
   showCart: boolean;
+  totalQuantity: number;
 }
 
 const initialState: CartState = {
-  cartItems: [{ id: -1, quantity: 0 }],
+  cartItems: [],
   showCart: false,
+  totalQuantity: 0,
 };
 
 const findItemIndexById = (state: CartState, id: number) => {
@@ -33,6 +35,9 @@ export const itemSlice = createSlice({
 
       if (itemIndex !== -1) {
         state.cartItems[itemIndex].quantity += 1;
+      } else {
+        // если нет такого массива то добавляем его в список
+        state.cartItems.push({ id, quantity: 1 });
       }
     },
 
@@ -46,18 +51,38 @@ export const itemSlice = createSlice({
       }
     },
 
-    incrementByValue: (state, action: PayloadAction<number>) => {
+    incrementByValue: (state, action) => {
       // кнопка submit в компоненте storeItem
-      const id = action.payload;
+      const { id, value } = action.payload;
+
       const itemIndex = findItemIndexById(state, id);
 
-      state.cartItems[itemIndex].quantity += action.payload;
+      if (itemIndex !== -1) {
+        // Используйте immer для создания измененной копии состояния
+        state.cartItems = state.cartItems.map((item, index) =>
+          index === itemIndex
+            ? { ...item, quantity: item.quantity + value }
+            : item
+        );
+      } else {
+        // Используйте immer для создания измененной копии состояния
+        state.cartItems = [...state.cartItems, { id, quantity: value }];
+      }
+
+      state.totalQuantity = state.cartItems.reduce(
+        (total, item) => total + item.quantity,
+        0
+      );
     },
 
     removeItemFromCart: (state, action: PayloadAction<number>) => {
       // если конкретный id есть в arr items, возвращается arr без item с таким id
       const id = action.payload;
       state.cartItems = state.cartItems.filter((item) => item.id !== id);
+      state.totalQuantity = state.cartItems.reduce(
+        (total, item) => total + item.quantity,
+        0
+      );
     },
 
     toggleCartVisibility: (state) => {
@@ -74,14 +99,6 @@ export const {
   removeItemFromCart,
   toggleCartVisibility,
 } = itemSlice.actions;
-
-export const cartQuantity = (state: RootState) => {
-  // Общее количество предметов в корзине, используется в Navbar для отображения
-  return state.item.cartItems.reduce(
-    (quantity, item) => quantity + item.quantity,
-    0
-  );
-};
 
 export const selectItem = (state: RootState) => state.item;
 

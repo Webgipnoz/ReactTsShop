@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Button, Card } from "react-bootstrap";
+import { useDispatch } from "react-redux";
+import { incrementByValue } from "../redux/slices/itemsSlice";
 
 import { formatCurrency } from "../utilities/formatCurrency";
-import { useShoppingCart } from "../context/ShoppingCardContext";
 
 type StoreItemProps = {
   id: number;
@@ -12,9 +13,13 @@ type StoreItemProps = {
 };
 
 const StoreItem = ({ id, name, price, imgUrl }: StoreItemProps) => {
-  const { setItemQuantityForCart } = useShoppingCart();
+  const dispatch = useDispatch();
   const [quantity, setQuantity] = useState(0);
   const [submitPressed, setSubmitPressed] = useState(false);
+
+  const handleAddToCart = () => {
+    setSubmitPressed(true);
+  };
 
   function incrementItem() {
     setQuantity(quantity + 1);
@@ -26,13 +31,13 @@ const StoreItem = ({ id, name, price, imgUrl }: StoreItemProps) => {
     }
   }
 
-  function buttonIsPressed() {
-    setSubmitPressed(!submitPressed);
+  const handleItemSubmit = () => {
     if (quantity !== 0) {
-      setItemQuantityForCart({ id, quantity });
+      dispatch(incrementByValue({ id, value: quantity }));
       setQuantity(0);
+      setSubmitPressed(false);
     }
-  }
+  };
 
   return (
     <Card className="h-100">
@@ -49,7 +54,7 @@ const StoreItem = ({ id, name, price, imgUrl }: StoreItemProps) => {
         </Card.Title>
         <div className="mt-auto">
           {submitPressed === false ? (
-            <Button className="w-100" onClick={() => buttonIsPressed()}>
+            <Button className="w-100" onClick={handleAddToCart}>
               + Add To Card
             </Button>
           ) : (
@@ -67,11 +72,7 @@ const StoreItem = ({ id, name, price, imgUrl }: StoreItemProps) => {
                 </div>
                 <Button onClick={() => incrementItem()}> + </Button>
               </div>
-              <Button
-                variant="success"
-                size="sm"
-                onClick={() => buttonIsPressed()}
-              >
+              <Button variant="success" size="sm" onClick={handleItemSubmit}>
                 Submit
               </Button>
             </div>

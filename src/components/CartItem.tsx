@@ -1,36 +1,53 @@
 import React, { useState } from "react";
-import { useShoppingCart } from "../context/ShoppingCardContext";
+import { useDispatch } from "react-redux";
+import {
+  increment,
+  decrement,
+  removeItemFromCart,
+} from "../redux/slices/itemsSlice";
 
 import storeItems from "../data/items.json";
 import { Button, Stack } from "react-bootstrap";
 import { formatCurrency } from "../utilities/formatCurrency";
 
-type CartItmesProps = {
+type CartItemsProps = {
   id: number;
   quantity: number;
 };
 
-const CartItem = ({ id, quantity }: CartItmesProps) => {
-  const { removeFromCart, incrementItem, decrementItem } = useShoppingCart();
-  const item = storeItems.find((i) => i.id === id);
-  if (item == null) return null;
+const CartItem = ({ id, quantity }: CartItemsProps) => {
+  const dispatch = useDispatch();
+
+  const incrementItem = (itemId: number) => {
+    dispatch(increment(itemId));
+  };
+
+  const decrementItem = (itemId: number) => {
+    if (quantity > 0) {
+      dispatch(decrement(itemId));
+    }
+  };
+
+  const removeFromCart = (itemId: number) => {
+    dispatch(removeItemFromCart(itemId));
+  };
 
   return (
     <Stack direction="horizontal" gap={4} className="d-flex align-items-center">
       <img
-        src={item.imgUrl}
+        src={storeItems[id - 1].imgUrl}
         style={{ width: "125px", height: "75px", objectFit: "cover" }}
       />
       <div className="me-auto">
-        <div>{item.name} </div>
+        <div>{storeItems[id - 1].name} </div>
         <div className="text-muted" style={{ fontSize: ".75rem" }}>
-          {formatCurrency(item.price)}
+          {formatCurrency(storeItems[id - 1].price)}
         </div>
       </div>
-      <div> {formatCurrency(item.price * quantity)}</div>
+      <div> {formatCurrency(storeItems[id - 1].price * quantity)}</div>
       <Button
         onClick={() => {
-          decrementItem(id, quantity);
+          decrementItem(id);
         }}
       >
         -
@@ -40,7 +57,7 @@ const CartItem = ({ id, quantity }: CartItmesProps) => {
       </span>
       <Button
         onClick={() => {
-          incrementItem(id, quantity);
+          incrementItem(id);
         }}
       >
         +

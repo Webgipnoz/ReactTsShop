@@ -1,10 +1,17 @@
 import React from "react";
 import { Button, Container, Nav, Navbar as NavbarBs } from "react-bootstrap";
 import { NavLink } from "react-router-dom";
-import { useShoppingCart } from "../context/ShoppingCardContext";
+import { selectItem, toggleCartVisibility } from "../redux/slices/itemsSlice";
+import { useSelector, useDispatch } from "react-redux";
+import ShoppingCard from "./ShoppingCard";
 
 const Navbar = () => {
-  const { cartQuantity, showCart } = useShoppingCart();
+  const { totalQuantity } = useSelector(selectItem);
+  const dispatch = useDispatch();
+
+  const isOpenCart = () => {
+    dispatch(toggleCartVisibility());
+  };
 
   return (
     <NavbarBs sticky="top" className="bg-white shadow-sm sm-3">
@@ -20,9 +27,9 @@ const Navbar = () => {
             About
           </Nav.Link>
         </Nav>
-        {cartQuantity > 0 && (
+        {totalQuantity > 0 && (
           <Button
-            onClick={() => showCart()}
+            onClick={() => isOpenCart()}
             style={{ width: "3rem", height: "3rem", position: "relative" }}
             variant="outline-primary"
           >
@@ -45,11 +52,12 @@ const Navbar = () => {
                 transform: "translate(25%, 25%)",
               }}
             >
-              {cartQuantity}
+              {totalQuantity}
             </div>
           </Button>
         )}
       </Container>
+      <ShoppingCard />
     </NavbarBs>
   );
 };

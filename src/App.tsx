@@ -8,11 +8,11 @@ import Store from "./pages/Store";
 import About from "./pages/About";
 import Order from "./pages/Order";
 import Navbar from "./components/Navbar";
-import ShoppingCardProvider from "./context/ShoppingCardContext";
+import { store } from "./redux/store";
 
 function App() {
   return (
-    <ShoppingCardProvider>
+    <Provider store={store}>
       <Navbar />
       <Container>
         <Routes>
@@ -22,7 +22,7 @@ function App() {
           <Route path="/order" element={<Order />} />
         </Routes>
       </Container>
-    </ShoppingCardProvider>
+    </Provider>
   );
 }
 
