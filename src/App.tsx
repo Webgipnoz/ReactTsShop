@@ -3,10 +3,12 @@ import { Routes, Route } from "react-router-dom";
 import { Container } from "react-bootstrap";
 import { Provider } from "react-redux";
 
-import Home from "./pages/Home";
-import Store from "./pages/Store";
-import About from "./pages/About";
-import Order from "./pages/Order";
+import HomePage from "./pages/HomePage";
+import StorePage from "./pages/StorePage";
+import AboutPage from "./pages/AboutPage";
+import OrderPage from "./pages/OrderPage";
+import ErrorPage from "./pages/ErrorPage";
+
 import Navbar from "./components/Navbar";
 import { store } from "./redux/store";
 
@@ -16,10 +18,11 @@ function App() {
       <Navbar />
       <Container>
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/store" element={<Store />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/order" element={<Order />} />
+          <Route path="/" element={<HomePage />} />
+          <Route path="/store" element={<StorePage />} />
+          <Route path="/about" element={<AboutPage />} />
+          <Route path="/order" element={<OrderPage />} />
+          <Route path="*" element={<ErrorPage />} />
         </Routes>
       </Container>
     </Provider>
