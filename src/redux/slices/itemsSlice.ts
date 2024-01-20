@@ -85,6 +85,12 @@ export const itemSlice = createSlice({
       );
     },
 
+    removeAllItemsFromCart: (state) => {
+      // удалить все айтемы из arr items
+      state.cartItems = [];
+      state.totalQuantity = 0;
+    },
+
     toggleCartVisibility: (state) => {
       // показывать корзину или нет
       state.showCart = !state.showCart;
@@ -98,6 +104,7 @@ export const {
   incrementByValue,
   removeItemFromCart,
   toggleCartVisibility,
+  removeAllItemsFromCart,
 } = itemSlice.actions;
 
 export const selectItem = (state: RootState) => state.item;

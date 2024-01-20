@@ -1,11 +1,12 @@
 import React from "react";
 import { Button, Container, Nav, Navbar as NavbarBs } from "react-bootstrap";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import { selectItem, toggleCartVisibility } from "../redux/slices/itemsSlice";
 import { useSelector, useDispatch } from "react-redux";
 import ShoppingCard from "./ShoppingCard";
 
 const Navbar = () => {
+  const location = useLocation(); // для поиска order из текущего пути
   const { totalQuantity } = useSelector(selectItem);
   const dispatch = useDispatch();
 
@@ -27,7 +28,7 @@ const Navbar = () => {
             About
           </Nav.Link>
         </Nav>
-        {totalQuantity > 0 && (
+        {!location.pathname.includes("/order") && totalQuantity !== 0 ? (
           <Button
             onClick={() => isOpenCart()}
             style={{ width: "3rem", height: "3rem", position: "relative" }}
@@ -55,7 +56,7 @@ const Navbar = () => {
               {totalQuantity}
             </div>
           </Button>
-        )}
+        ) : null}
       </Container>
       <ShoppingCard />
     </NavbarBs>
