@@ -5,6 +5,7 @@ import { formatCurrency } from "../utilities/formatCurrency";
 import storeItem from "../data/items.json";
 import { useSelector, useDispatch } from "react-redux";
 import { selectItem, toggleCartVisibility } from "../redux/slices/itemsSlice";
+import { useMemo } from "react";
 
 const ShoppingCard = () => {
   const { cartItems, showCart } = useSelector(selectItem);
@@ -14,14 +15,16 @@ const ShoppingCard = () => {
     dispatch(toggleCartVisibility());
   };
 
-  const calculateTotal = () => {
-    const total = cartItems.reduce((acc, currCartItem) => {
+  const total = useMemo(() => {
+    return cartItems.reduce((acc, currCartItem) => {
       const item = storeItem.find((i) => i.id === currCartItem.id);
       return acc + (item?.price || 0) * currCartItem.quantity;
     }, 0);
+  }, []);
 
+  const formattedTotal = useMemo(() => {
     return formatCurrency(Number(total));
-  };
+  }, [total]);
 
   return (
     <Offcanvas
@@ -38,9 +41,9 @@ const ShoppingCard = () => {
           {cartItems.map((item) => (
             <CartItem key={item.id} {...item} />
           ))}
-          <div className="ms-auto fw-bold fs-5">Total {calculateTotal()}</div>
+          <div className="ms-auto fw-bold fs-5">Total {formattedTotal}</div>
         </Stack>
-        <Link to={"/order"}>
+        <Link to="/order">
           <Button onClick={closeCart} variant="success" size="lg">
             Submit
           </Button>

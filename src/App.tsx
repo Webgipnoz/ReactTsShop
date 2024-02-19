@@ -17,6 +17,7 @@ function App() {
     <Provider store={store}>
       <Navbar />
       <Container>
+        {/* сделай переиспользуемый компонент роутов а сами роуты засунь в массив в отдельном файле */}
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/store" element={<StorePage />} />
@@ -30,3 +31,11 @@ function App() {
 }
 
 export default App;
+//почитай про авторизованные роуты или private route
+export const routes: any[] = [
+  {
+    path: "/",
+    element: <HomePage />,
+    isAuth: false,
+  },
+];

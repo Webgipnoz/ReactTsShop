@@ -39,7 +39,6 @@ const OrderPage = () => {
       </Row>
       <div
         style={{
-          position: "absolute",
           bottom: 0,
           right: 0,
           marginRight: "200px",

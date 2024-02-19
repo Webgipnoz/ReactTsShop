@@ -10,6 +10,9 @@ const Navbar = () => {
   const { totalQuantity } = useSelector(selectItem);
   const dispatch = useDispatch();
 
+  const flagForButtonCart =
+    !location.pathname.includes("/order") && totalQuantity !== 0;
+
   const isOpenCart = () => {
     dispatch(toggleCartVisibility());
   };
@@ -28,9 +31,10 @@ const Navbar = () => {
             About
           </Nav.Link>
         </Nav>
-        {!location.pathname.includes("/order") && totalQuantity !== 0 ? (
+
+        {flagForButtonCart ? (
           <Button
-            onClick={() => isOpenCart()}
+            onClick={isOpenCart}
             style={{ width: "3rem", height: "3rem", position: "relative" }}
             variant="outline-primary"
           >

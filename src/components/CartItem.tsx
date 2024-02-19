@@ -46,13 +46,7 @@ const CartItem = ({ id, quantity }: CartItemsProps) => {
       </div>
       <div> {formatCurrency(storeItems[id - 1].price * quantity)}</div>
       {quantity !== 1 ? (
-        <Button
-          onClick={() => {
-            decrementItem(id);
-          }}
-        >
-          -
-        </Button>
+        <Button onClick={() => decrementItem(id)}>-</Button>
       ) : null}
       <span className="text-muted" style={{ fontSize: ".65rem" }}>
         x{quantity}

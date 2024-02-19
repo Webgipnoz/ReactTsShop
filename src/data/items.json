@@ -22,5 +22,53 @@
     "name": "Apple",
     "price": 14000,
     "imgUrl": "/imgs/item4.jpg"
+  },
+  {
+    "id": 5,
+    "name": "screwdriver",
+    "price": 10.99,
+    "imgUrl": "/imgs/item1.jpg"
+  },
+  {
+    "id": 6,
+    "name": "Computer",
+    "price": 1199,
+    "imgUrl": "/imgs/item2.jpg"
+  },
+  {
+    "id": 7,
+    "name": "Car",
+    "price": 1.05,
+    "imgUrl": "/imgs/item3.jpg"
+  },
+  {
+    "id": 8,
+    "name": "Apple",
+    "price": 14000,
+    "imgUrl": "/imgs/item4.jpg"
+  },
+  {
+    "id": 9,
+    "name": "screwdriver",
+    "price": 10.99,
+    "imgUrl": "/imgs/item1.jpg"
+  },
+  {
+    "id": 10,
+    "name": "Computer",
+    "price": 1199,
+    "imgUrl": "/imgs/item2.jpg"
+  },
+  {
+    "id": 11,
+    "name": "Car",
+    "price": 1.05,
+    "imgUrl": "/imgs/item3.jpg"
+  },
+  {
+    "id": 12,
+    "name": "Apple",
+    "price": 14000,
+    "imgUrl": "/imgs/item4.jpg"
   }
 ]
